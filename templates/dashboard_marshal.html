@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>Marshal Dashboard (Zone {{ zone }})</h3>
+
+<div id="locationStatus" class="alert alert-info">Capturing location...</div>
+
+<div class="my-3">
+  <a href="{{ url_for('summary') }}" class="btn btn-warning btn-mini">End-of-Day Summary</a>
+</div>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+        <th>User</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for b in bookings %}
+    <tr>
+      <td>{{ b.user_id }}</td>
+      <td>{{ b.start_time }}</td>
+      <td>{{ b.end_time }}</td>
+      <td>
+        <form method="POST" action="{{ url_for('process_payment', booking_id=b.id) }}" class="mb-2">
+          <div class="input-group">
+            <select name="currency" class="form-select">
+                <option>USD</option>
+                <option>ZiG</option>
+            </select>
+            <input type="number" name="amount" step="0.01" class="form-control" placeholder="Amount" required>
+            <button class="btn btn-primary">Pay</button>
+          </div>
+        </form>
+        <form method="POST" action="{{ url_for('cancel_booking', booking_id=b.id) }}">
+          <button class="btn btn-danger btn-sm">Cancel</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(document).ready(function() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      $('#locationStatus').text("Location captured.");
+      $.post("{{ url_for('update_location') }}", {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      });
+    }, function(error) {
+      $('#locationStatus').text("Failed to capture location: " + error.message);
+      $.post("{{ url_for('update_location') }}", {
+        lat: 0,
+        lng: 0
+      });
+    });
+  } else {
+    $('#locationStatus').text("Geolocation not supported by this browser.");
+  }
+});
+</script>
+{% endblock %}

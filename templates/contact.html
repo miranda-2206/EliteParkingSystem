@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>Contact Us</h3>
+
+<form method="POST" action="{{ url_for('contact') }}">
+  <div class="mb-3">
+    <label for="name" class="form-label">Your Name</label>
+    <input type="text" name="name" id="name" class="form-control" required>
+  </div>
+
+  <div class="mb-3">
+    <label for="email" class="form-label">Your Email</label>
+    <input type="email" name="email" id="email" class="form-control" required>
+  </div>
+
+  <div class="mb-3">
+    <label for="subject" class="form-label">Subject</label>
+    <input type="text" name="subject" id="subject" class="form-control" required>
+  </div>
+
+  <div class="mb-3">
+    <label for="message" class="form-label">Message</label>
+    <textarea name="message" id="message" class="form-control" rows="4" required></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Send Message</button>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $('form').on('submit', function(e) {
+    if (!$('#name').val() || !$('#email').val() || !$('#subject').val() || !$('#message').val()) {
+      alert('Please fill in all fields.');
+      e.preventDefault();
+    }
+  });
+</script>
+{% endblock %}

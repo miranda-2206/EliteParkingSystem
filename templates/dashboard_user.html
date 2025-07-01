@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>User Dashboard</h3>
+
+<h5>Available Zones:</h5>
+<ul class="list-group">
+  {% for zone in zones %}
+  <li class="list-group-item d-flex justify-content-between">
+    {{ zone.name }}
+    <a href="{{ url_for('book', zone_id=zone.id) }}" class="btn btn-primary btn-sm">Book</a>
+  </li>
+  {% endfor %}
+</ul>
+
+<h5 class="mt-4">My Bookings:</h5>
+<table class="table table-sm table-bordered">
+  <thead><tr><th>Zone</th><th>Start</th><th>End</th><th>Status</th></tr></thead>
+  <tbody>
+  {% for b in bookings %}
+    <tr>
+      <td>{{ zones[b.zone_id - 1].name }}</td>
+      <td>{{ b.start_time }}</td>
+      <td>{{ b.end_time }}</td>
+      <td>{{ b.status if b.status != "paid" else "Paid " + b.payment_currency + b.payment_amount|string }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

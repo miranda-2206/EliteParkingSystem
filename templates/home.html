@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="text-center my-5">
+  <h2>ElitePark Parking System</h2>
+
+  <div class="mt-4">
+    <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg mb-2 w-75">Login</a><br>
+    <a href="{{ url_for('signup') }}" class="btn btn-success btn-lg mb-2 w-75">Signup</a><br>
+    <a href="{{ url_for('help') }}" class="btn btn-info btn-lg mb-2 w-75">Help</a><br>
+    <a href="{{ url_for('contact') }}" class="btn btn-secondary btn-lg w-75">Contact Us</a>
+  </div>
+</div>
+{% endblock %}

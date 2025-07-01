@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>End-of-Day Summary</h3>
+
+<h5>Paid Bookings</h5>
+<table class="table table-bordered table-sm">
+  <thead>
+    <tr><th>User</th><th>Start</th><th>End</th><th>Amount</th><th>Currency</th><th>Paid At</th></tr>
+  </thead>
+  <tbody>
+    {% for b in paid_bookings %}
+    <tr>
+      <td>{{ b.user_id }}</td>
+      <td>{{ b.start_time }}</td>
+      <td>{{ b.end_time }}</td>
+      <td>{{ b.payment_amount }}</td>
+      <td>{{ b.payment_currency }}</td>
+      <td>{{ b.payment_time }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h5>Cancelled Bookings</h5>
+<table class="table table-bordered table-sm">
+  <thead><tr><th>User</th><th>Start</th><th>End</th></tr></thead>
+  <tbody>
+    {% for b in cancelled_bookings %}
+    <tr>
+      <td>{{ b.user_id }}</td>
+      <td>{{ b.start_time }}</td>
+      <td>{{ b.end_time }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h5>Total Collected:</h5>
+<ul>
+  <li>USD: {{ total_usd }}</li>
+  <li>ZiG: {{ total_zig }}</li>
+</ul>
+
+<a href="{{ url_for('dashboard_marshal') }}" class="btn btn-primary mt-3">Back to Dashboard</a>
+{% endblock %}

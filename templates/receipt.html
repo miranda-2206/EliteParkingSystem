@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>Payment Receipt</h3>
+
+<table class="table">
+  <tr><th>User:</th><td>{{ user.first_name }} {{ user.surname }}</td></tr>
+  <tr><th>Payment Time:</th><td>{{ booking.payment_time }}</td></tr>
+  <tr><th>Amount Paid:</th><td>{{ booking.payment_amount }} {{ booking.payment_currency }}</td></tr>
+  <tr><th>Booking Expiration:</th><td>{{ booking.end_time }}</td></tr>
+</table>
+
+<a href="{{ url_for('dashboard_marshal') }}" class="btn btn-primary">Back to Dashboard</a>
+{% endblock %}
